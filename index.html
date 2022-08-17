@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Form</title>
+    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script> -->
+    <!-- <script>eruda.init();</script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sofia&family=Pacifico&family=Dancing+Script:wght@400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&display=swap" type="text/css">
+    <link rel="stylesheet" href="https://me.anweshan.online/vendor/fontawesome/css/all.css?v=37833b9" type="text/css" />
+    <link rel="stylesheet" href="https://me.anweshan.online/css/style.css?v=7f7e728" type="text/css" />
+    <link rel="stylesheet" href="https://me.anweshan.online/css/flex.css?v=7f7e728" type="text/css" />
+    <style type="text/css">
+        .modal-fullscreen{width:100vw;max-width:none;height:100%;margin:0; min-height: calc(100%);}.modal-fullscreen .modal-content{height:100%;border:0;border-radius:0}.modal-fullscreen .modal-header{border-radius:0}.modal-fullscreen .modal-body{overflow-y:auto}.modal-fullscreen .modal-footer{border-radius:0}@media (max-width:575.98px){.modal-fullscreen-sm-down{width:100vw;max-width:none;height:100%;margin:0; min-height: calc(100%);}
+        .modal-fullscreen-sm-down .modal-content{height:100%;border:0;border-radius:0}.modal-fullscreen-sm-down .modal-header{border-radius:0}.modal-fullscreen-sm-down .modal-body{overflow-y:auto}.modal-fullscreen-sm-down .modal-footer{border-radius:0}}@media (max-width:767.98px){.modal-fullscreen-md-down{width:100vw;max-width:none;height:100%;margin:0;min-height: calc(100%);}.modal-fullscreen-md-down .modal-content{height:100%;border:0;border-radius:0}
+        .modal-fullscreen-md-down .modal-header{border-radius:0}.modal-fullscreen-md-down .modal-body{overflow-y:auto}.modal-fullscreen-md-down .modal-footer{border-radius:0}}
+        @media (max-width:991.98px){.modal-fullscreen-lg-down{width:100vw;max-width:none;height:100%;margin:0}.modal-fullscreen-lg-down .modal-content{height:100%;border:0;border-radius:0}.modal-fullscreen-lg-down .modal-header{border-radius:0}.modal-fullscreen-lg-down .modal-body{overflow-y:auto}.modal-fullscreen-lg-down .modal-footer{border-radius:0}}@media (max-width:1199.98px)
+        {.modal-fullscreen-xl-down{width:100vw;max-width:none;height:100%;margin:0}.modal-fullscreen-xl-down .modal-content{height:100%;border:0;border-radius:0}
+        .modal-fullscreen-xl-down .modal-header{border-radius:0}.modal-fullscreen-xl-down .modal-body{overflow-y:auto}.modal-fullscreen-xl-down .modal-footer{border-radius:0}}@media (max-width:1399.98px){.modal-fullscreen-xxl-down{width:100vw;max-width:none;height:100%;margin:0}.modal-fullscreen-xxl-down .modal-content{height:100%;border:0;border-radius:0}.modal-fullscreen-xxl-down .modal-header{border-radius:0}.modal-fullscreen-xxl-down .modal-body{overflow-y:auto}.modal-fullscreen-xxl-down .modal-footer{border-radius:0}}
+     </style>
+     <style>
+        @media (min-width:767.98px){
+            .modal-dialog:not(.modal-fullscreen){
+                max-width: calc(100% - 4rem);
+            }
+            .modal-open .modal{
+                padding-right: 0px !important;
+            }
+            body{
+                padding-right: 0px !important;
+            }
+            .custom-form-group {
+                margin-bottom: 0;
+            }
+        }
+        .snackbar-container.bold > p:first-child, .snackbar-container.bold-2 > p:last-child {
+            font-weight: bold !important;
+        }
+
+        .snackbar-container.italic > p:first-child, .snackbar-container.italic-2 > p:last-child {
+            font-style: italic !important;
+        }
+
+        .validation {
+            display: none;
+            visibility: hidden;
+        }
+
+        .validation-complete#next, 
+        .validation-complete#reset_main_form, 
+        .validation-complete#standalone-container,
+        #submit_btn, 
+        #recaptcha-container, 
+        #standalone-viewer{
+            display: none; 
+        }
+
+        .validation-complete#submit_btn{
+            display: inline-block;
+        }
+
+        .validation-complete#recaptcha-container, 
+        .validation-complete#standalone-viewer{
+            display: block;
+        }
+
+        .invalid-feedback, .valid-feedback {
+            display: block;
+            font-weight: 700;
+            font-size: 96%;
+        }
+
+        .invalid-feedback {
+            color: var(--danger);
+        }
+
+        .valid-feedback {
+            color: var(--success);
+        }
+
+        .invalid-feedback::before,.valid-feedback::before {
+            font-family: 'Font Awesome 5 Pro';
+            font-weight: 400;
+            font-size: 1.2em;
+        }
+
+        .invalid-feedback::before{
+            content: "\f071\0020";
+        }
+
+        .valid-feedback::before{
+            content: "\f058\0020";
+        }
+
+        .validation.valid-feedback, .validation.invalid-feedback {
+            animation: fadeIn 500ms;
+            animation-direction: alternate;
+            animation-iteration-count: 1;
+            visibility: visible;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+
+        .custom-footer {
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+     </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <button type="button" class="btn btn-primary" id="contact_form_toggle">Send me a message</button>
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true" id="contact_form">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fal fa-envelope-open-text"></i>&nbsp;Contact Form</h5>
+                    </div>
+                    <div class="modal-body scroll">
+                        <div class="alert alert-info fade show" role="alert">
+                            <span class="fas fa-info"></span>&nbsp;Please do not submit any <b><u>sensitive information</u></b> (like username, password) etc via this form
+                        </div>
+                        <hr/>
+                        <form id="form-1" method="POST">
+                            <div class="row">
+                                <div class="col-6 col-s-6 no-space-on-collapse">
+                                    <div class="form-group custom-form-group">
+                                        <label for="fullName">Full Name *</label>
+                                        <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" required placeholder="John Doe" data-error="#fullNameError">
+                                        <small id="fullNameHelp" class="form-text text-muted">We'll never share your name with anyone else.</small>
+                                        <div id="fullNameError" class="validation"></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-s-6 no-space-on-collapse">
+                                    <div class="form-group custom-form-group">
+                                        <label for="email">Email address *</label>
+                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required placeholder="example@example.com" data-error="#emailError">
+                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                        <div id="emailError" class="validation"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-12 col-s-12 no-space-on-collapse">
+                                    <div class="form-group custom-form-group">
+                                        <label for="subject">Subject *</label>
+                                        <input type="text" class="form-control" id="subject" aria-describedby="subjectHelp" required placeholder="Just a note!" data-error="#subjectError">
+                                        <small id="subjectHelp" class="form-text text-muted">Describe your message with a subject.</small>
+                                        <div id="subjectError" class="validation"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-12 col-s-12 no-space-on-collapse">
+                                    <div class="form-group custom-form-group">
+                                        <label for="standalone-container" id="standalone-container-label">Your Message *</label>
+                                        <div id="standalone-container" data-placeholder="Leave me a message!" data-error="#messageError"></div>
+                                        <div id="standalone-viewer" data-placeholder="Leave me a message!" data-error="#messageError"></div>
+                                        <div id="messageError" class="validation"></div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </form>
+                    </div>
+                    <div class="modal-footer custom-footer" id="recaptcha-container">
+                        <div class="row">
+                            <div class="col-12 col-s-12 no-space-on-collapse">
+                                <div class="alert alert-warning" style="display: none;" role="alert" id="validation-banner">
+                                    <i class="fas fa-user-alien"></i>&nbsp;This form is now ready for preview. Complete the challenge below & then press submit. You may press 'Cancel &amp; Close' to cancel the operation.
+                                </div>
+                                <div id="recaptcha-loading" style="font-size: 18px;"><i class="far fa-spinner-third fa-spin"></i>&nbsp;Loading...</div>
+                                <div id="recaptcha"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-12 col-s-12 no-space-on-collapse">
+                                <button class="btn btn-info" id="contact_form_close" data-target="#contact_form" data-dismiss="modal" role="button">Cancel &amp; Close</button>&nbsp;
+                                <button class="btn btn-danger" id="reset_main_form" data-target="#main_form" role="button">Reset All</button>&nbsp;<button class="btn btn-success" id="next" data-dispose="#next" data-retain="#recaptcha-container" data-button="#submit_btn" role="button">Review & Confirm</button><button class="btn btn-success" id="submit_btn" role="button" disabled>Send Message 🚀</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" defer async></script>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
