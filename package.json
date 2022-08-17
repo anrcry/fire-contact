@@ -1,0 +1,36 @@
+{
+  "name": "fire-contact",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^3.0.0"
+  },
+  "dependencies": {
+    "@toast-ui/editor": "^3.2.0",
+    "@toast-ui/editor-plugin-chart": "^3.0.1",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
+    "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
+    "@toast-ui/editor-plugin-table-merged-cell": "^3.1.0",
+    "@toast-ui/editor-plugin-uml": "^3.0.1",
+    "axios": "^0.27.2",
+    "bad-words": "^3.0.4",
+    "firebase": "^9.9.2",
+    "js-sha1": "^0.6.0",
+    "node-snackbar": "^0.1.16"
+  },
+  "repository": {
+    "url": "https://github.com/formula21/fire-contact.git"
+  },
+  "author": {
+    "email": "anweshanrc15@gmail.com",
+    "name": "Anweshan Roy Chowdhury",
+    "url": "https://me.anweshan.online"
+  },
+  "license": "MIT",
+  "keywords": ["contact-form", "firebase", "front-end", "nodejs", "javascript", "reCAPTCHA"]
+}
