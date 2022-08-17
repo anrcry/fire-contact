@@ -6,9 +6,8 @@ const app = express();
 
 const ADMIN_PORTAL = "https://www.google.com/recaptcha/admin/";
 const VERIFY_DOCS = "https://developers.google.com/recaptcha/docs/verify";
-const URL_COMPARE_REGEX = new RegExp(
-  /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
-);
+const URL_COMPARE_REGEX = new RegExp(/^(((ht|f)tps?):\/\/)+[\w-]+([localhost]|(\.[\w-]+))+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/);
+
 
 const PROD = process.env.MODE === "development" ? false : true;
 
@@ -49,7 +48,7 @@ const whitelist = [
   "https://app.anweshan.online",
   "https://anweshan-roy-chowdhury.web.app",
   "https://anweshan-roy-chowdhury.firebaseapp.com",
-  "https://auth.anweshan.online",
+  "https://auth.anweshan.online"
 ];
 
 if(!PROD) { 
@@ -57,15 +56,13 @@ if(!PROD) {
   whitelist.push('https://5173-formula21-firecontact-6aa3kmg6qea.ws-us60.gitpod.io');
   whitelist.push('https://3000-formula21-firecontact-6aa3kmg6qea.ws-us60.gitpod.io');
   whitelist.push('http://localhost:3000') 
-  console.log(whitelist);
 }
 
 const corsOptions = Object.freeze({
   credentials: true, // This is important.
   origin: (origin, callback) => {
-    return callback(null, true);
-    // if (whitelist.includes(origin)) return callback(null, true);
-    // return callback(`This origin is not allowed!`, false);
+    if (whitelist.includes(origin)) return callback(null, true);
+      return callback(`This origin is not allowed!`, false);
   },
 });
 
@@ -88,6 +85,8 @@ app.post("/verify", async (req, res) => {
       secret: RECAPTCHA_SECRET_KEY,
       response: token,
     }).toString();
+    
+    // console.log(`${RECAPTCHA_ENDPOINT}?${params}`);
 
     const resp = await axios.post(`${RECAPTCHA_ENDPOINT}?${params}`);
 
