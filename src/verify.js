@@ -1,12 +1,12 @@
 
-const { PUBLIC_VERIFY_ENPOINT = 'http://localhost:3000/verify' } = import.meta.env
+const { PUBLIC_VERIFY_ENDPOINT = "http://localhost:3000/verify" } = import.meta.env
 
-const URL_COMPARE_REGEX = new RegExp(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)
+const URL_COMPARE_REGEX = new RegExp(/^(((ht|f)tps?):\/\/)+[\w-]+([localhost]|(\.[\w-]+))+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/);
 
 const verifyToken = async ( token ) => {
-    if( PUBLIC_VERIFY_ENPOINT.length === 0 || PUBLIC_VERIFY_ENPOINT.match(URL_COMPARE_REGEX) ){
-        // This won't work
-        throw Error(`Specify a valid endpoint to verify the token`);
+    
+    if( ! ( PUBLIC_VERIFY_ENDPOINT.length !==0 && PUBLIC_VERIFY_ENDPOINT.match(URL_COMPARE_REGEX) ) ){
+        throw Error("Specify a valid endpoint to verify the token");
     }
 
     if( typeof token !== 'string' || token.length === 0 ){
@@ -24,7 +24,7 @@ const verifyToken = async ( token ) => {
         body: JSON.stringify({token}),
     })
 
-    const response = await fetch( PUBLIC_VERIFY_ENPOINT , {
+    const response = await fetch( PUBLIC_VERIFY_ENDPOINT , {
         redirect: 'follow',
         ...fetchOpts,
     });
