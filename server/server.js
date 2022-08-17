@@ -51,11 +51,12 @@ const whitelist = [
   "https://auth.anweshan.online"
 ];
 
-if(!PROD) { 
-  whitelist.push('http://localhost:5173'); 
-  whitelist.push('https://5173-formula21-firecontact-6aa3kmg6qea.ws-us60.gitpod.io');
-  whitelist.push('https://3000-formula21-firecontact-6aa3kmg6qea.ws-us60.gitpod.io');
-  whitelist.push('http://localhost:3000') 
+if(!PROD) {
+  [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://localhost:5500',
+  ].forEach( a => whitelist.push(a) )
 }
 
 const corsOptions = Object.freeze({
