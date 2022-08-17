@@ -1,7 +1,8 @@
+import './src/style.css';
 import { loadScript, showSnackbar } from './src/util';
 import { el, editor, setErrorEditorCss } from './src/editor';
 import { viewer, el as viewerEl } from './src/viewer';
-import { auth, signInAnonymously, signOut, onAuthStateChanged, createRecord, hasRecord } from './src/firebase';
+import { auth, signInAnonymously, onAuthStateChanged, createRecord } from './src/firebase';
 import { verifyToken } from './src/verify';
 import Snackbar from "node-snackbar";
 import sha1 from 'js-sha1';
@@ -214,7 +215,7 @@ document.querySelector("#next").addEventListener("click", (e) => {
     if(error){
         // Show the error snackbar
         showSnackbar( {
-            text: "There were some errors in the form! Please try again",
+            text: `🤨 There were some errors! Please try again`,
             duration: 10000,
             fontSize: '16px',
             pos: 'top-right',
@@ -263,7 +264,6 @@ document.querySelector("#next").addEventListener("click", (e) => {
     // Toggle all necessary 'validation-classes' for display & state change...
     validationToggle.forEach( el => el.classList.add(validationToggleClass) );
 
-    // TODO: Vanilla Javascript
     $("#validation-banner").fadeIn()
 
     // Now render grecaptcha, after putting flag as true...
@@ -311,7 +311,13 @@ document.querySelector('#submit_btn').addEventListener('click', async (event) =>
         });
     }
 
-    
+    showSnackbar({
+        text: `<i class="fas fa-spinner-third fa-spin" style="font-size: 22px !important;"></i>&nbsp;Verifying your message!`,
+        duration: 0,
+        fontSize: '22px',
+        pos: 'top-right',
+        showAction: false,
+    })
 
     const token = grecaptcha.getResponse(captcha.widget);
 
@@ -353,7 +359,7 @@ document.querySelector('#submit_btn').addEventListener('click', async (event) =>
     const {email, name, subject, message, token:hToken } = {...formData, token: { value: sha1(token) } };
 
     showSnackbar({
-        text: `<i class="far fa-circle fa-spin" style="font-size: 22px !important;"></i>&nbsp;Processing your message!`,
+        text: `<i class="fas fa-spinner-third fa-spin" style="font-size: 22px !important;"></i>&nbsp;Processing your message!`,
         duration: 0,
         fontSize: '22px',
         pos: 'top-right',
@@ -375,14 +381,14 @@ document.querySelector('#submit_btn').addEventListener('click', async (event) =>
 
     try {
 
-        const { record } = await createRecord( { ...resp } );
+        const { record, success, err=null } = await createRecord( { ...resp } );
 
-        if(record.id === null){
-            console.error("❌ Could not record message.");
-            throw new Error('Oops! Could not be recorded');
+        if(!success || !'id' in record || record.id === null){
+            console.error(err);
+            throw err ?? new Error(`There was some error`);
         }
 
-        $('#contact_form').modal('close');
+        $('#contact_form').modal('toggle');
         event.target.disabled = false;
         
         /** 
@@ -412,7 +418,7 @@ document.querySelector('#submit_btn').addEventListener('click', async (event) =>
         })
 
     } catch (err) {
-
+        console.error(err);
         /** 
          * ✅ Clear the form data
          * ✅ Enable items
@@ -429,7 +435,7 @@ document.querySelector('#submit_btn').addEventListener('click', async (event) =>
         allReset({ snackClose, elementReset });
 
         showSnackbar({
-            text: "Thank you for your message. 😞 Something went wrong and your message could not be recorded. You may retry. However, I would like to apologize 🙏🏼!",
+            text: "Thank you for your message. 😞 Something went wrong and your message could not be recorded. I would like to apologize 🙏🏼!",
             duration: 20000,
             fontSize: '16px',
             pos: 'top-right',
