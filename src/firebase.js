@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
 import { getAuth, connectAuthEmulator, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js";
-import { getFirestore, connectFirestoreEmulator, serverTimestamp, collection, addDoc, where, limit, getDocs, query } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js"
+import { getFirestore, connectFirestoreEmulator, serverTimestamp, doc, setDoc, where, limit, getDocs, query } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js"
 // import { getStorage, connectStorageEmulator } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-storage.js";
 
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app-check.js";
@@ -35,23 +35,23 @@ if(!import.meta.env.PROD) connectFirestoreEmulator(db, '127.0.0.1', 8002);
 // TODO: Database Transaction required (Rollback on failure with message).
 const createRecord = async ( { uid, email, name, subject, message, token } ) => {
 
-    console.log(hasRecord( { uid, token }));
-
-    const { replied, timestamp } = { replied: false, timestamp: serverTimestamp() };
-    // Check uniqueness of token (AFTER INDEX CREATION)
-    
-    const docRef = await addDoc(collection(db, PUBLIC_FIREBASE_FIRESTORE_COLLECTION), {
-        uid,
-        email,
-        name,
-        subject,
-        message,
-        token,
-        replied,
-        timestamp
-    });
-
-    return { record: docRef };
+    const { replied, sentAt } = { replied: false, sentAt: serverTimestamp() };
+   
+    try{
+        await setDoc(doc(db, PUBLIC_FIREBASE_FIRESTORE_COLLECTION, token), {
+            uid,
+            email,
+            name,
+            subject,
+            message,
+            token,
+            replied,
+            sentAt
+        });
+        return { record: { id: token }, success: true }
+    }catch (err) {
+       return  { record: undefined, success: false, err }
+    }
 };
 
 const hasRecord = async ( { uid, token } ) => {
@@ -59,9 +59,7 @@ const hasRecord = async ( { uid, token } ) => {
     
     const records = await getDocs(q);
 
-    if(records === false){
-
-    }
+    return records.empty;
 }
 
 export {
@@ -70,6 +68,5 @@ export {
     signInAnonymously,
     signOut,
     onAuthStateChanged,
-    createRecord,
-    hasRecord
+    createRecord
 }
