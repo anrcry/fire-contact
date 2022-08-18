@@ -45,10 +45,8 @@ const { RECAPTCHA_ENDPOINT, RECAPTCHA_SECRET_KEY } = process.env;
 
 const whitelist = [
   "https://me.anweshan.online",
-  "https://app.anweshan.online",
-  "https://anweshan-roy-chowdhury.web.app",
-  "https://anweshan-roy-chowdhury.firebaseapp.com",
-  "https://auth.anweshan.online"
+  "https://fire-apps-7827c.web.app",
+  "https://fire-apps-7827c.firebaseapp.com",
 ];
 
 if(!PROD) {
