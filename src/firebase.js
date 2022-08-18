@@ -48,7 +48,7 @@ const createRecord = async ( { uid, email, name, subject, message, token, hostna
             hostname,
             replied,
             sentAt
-        }, { merge: true });
+        });
         return { record: { id: token }, success: true }
     }catch (err) {
        return  { record: undefined, success: false, err }

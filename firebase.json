@@ -3,26 +3,6 @@
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
-  "hosting": {
-    "public": "dist",
-    "ignore": [
-      "**/.git/**",
-      "**/server/**",
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**",
-      "*-debug.log"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  },
-  "storage": {
-    "rules": "storage.rules"
-  },
   "emulators": {
     "auth": {
       "port": 8001,
@@ -30,18 +10,6 @@
     },
     "firestore": {
       "port": 8002,
-	    "host": "127.0.0.1"
-    },
-    "hosting": {
-      "port": 8003,
-	    "host": "127.0.0.1"
-    },
-    "storage": {
-      "port": 8004,
-	    "host": "127.0.0.1"
-    },
-    "database": {
-      "port": 8005,
 	    "host": "127.0.0.1"
     },
     "ui": {
