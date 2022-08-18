@@ -18,11 +18,9 @@
 }
 
 .validation-complete#next, 
-.validation-complete#reset_main_form, 
-.validation-complete#standalone-container,
+.validation-complete#reset_main_form,
 #submit_btn, 
-#recaptcha-container, 
-#standalone-viewer{
+#recaptcha-container{
     display: none; 
 }
 
@@ -30,8 +28,7 @@
     display: inline-block;
 }
 
-.validation-complete#recaptcha-container, 
-.validation-complete#standalone-viewer{
+.validation-complete#recaptcha-container{
     display: block;
 }
 
