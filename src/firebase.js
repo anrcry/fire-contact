@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
-import { getAuth, connectAuthEmulator, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js";
-import { getFirestore, connectFirestoreEmulator, serverTimestamp, doc, setDoc, where, limit, getDocs, query } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js"
+import { getAuth, connectAuthEmulator, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-auth.js";
+import { getFirestore, connectFirestoreEmulator, serverTimestamp, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js"
 // import { getStorage, connectStorageEmulator } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-storage.js";
 
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app-check.js";
@@ -59,7 +59,6 @@ export {
     auth,
     appCheck,
     signInAnonymously,
-    signOut,
     onAuthStateChanged,
     createRecord
 }
