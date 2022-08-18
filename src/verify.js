@@ -23,7 +23,7 @@ const verifyToken = async ( token ) => {
         },
         body: JSON.stringify({token}),
     })
-
+    
     const response = await fetch( PUBLIC_VERIFY_ENDPOINT , {
         redirect: 'follow',
         ...fetchOpts,
