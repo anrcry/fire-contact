@@ -33,7 +33,7 @@ if(!import.meta.env.PROD) connectFirestoreEmulator(db, '127.0.0.1', 8002);
 
 // Create a database record...
 // TODO: Database Transaction required (Rollback on failure with message).
-const createRecord = async ( { uid, email, name, subject, message, token } ) => {
+const createRecord = async ( { uid, email, name, subject, message, token, hostname } ) => {
 
     const { replied, sentAt } = { replied: false, sentAt: serverTimestamp() };
    
@@ -45,6 +45,7 @@ const createRecord = async ( { uid, email, name, subject, message, token } ) => 
             subject,
             message,
             token,
+            hostname,
             replied,
             sentAt
         }, { merge: true });
@@ -53,14 +54,6 @@ const createRecord = async ( { uid, email, name, subject, message, token } ) => 
        return  { record: undefined, success: false, err }
     }
 };
-
-const hasRecord = async ( { uid, token } ) => {
-    const q = query(collection(db, PUBLIC_FIREBASE_FIRESTORE_COLLECTION), where("uid", "==", uid ), where( 'token', '==' , token ), limit(1));
-    
-    const records = await getDocs(q);
-
-    return records.empty;
-}
 
 export {
     auth,
