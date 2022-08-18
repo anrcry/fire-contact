@@ -1,7 +1,5 @@
 import './src/style.css';
 import { loadScript, showSnackbar } from './src/util';
-import { el, editor, setErrorEditorCss } from './src/editor';
-import { viewer, el as viewerEl } from './src/viewer';
 import { auth, signInAnonymously, onAuthStateChanged, createRecord } from './src/firebase';
 import { verifyToken } from './src/verify';
 import Snackbar from "node-snackbar";
@@ -10,8 +8,7 @@ import sha1 from 'js-sha1';
 
 const { PUBLIC_RECAPTCHA_SITE_KEY, PUBLIC_RECAPTCHA_SITE_THEME, PUBLIC_RECAPTCHA_SITE_SIZE } = import.meta.env;
 
-const validationToggleClass = 'validation-complete'
-window.errorMode = false;
+const validationToggleClass = 'validation-complete';
 window.submission = false;
 
 const captcha = {
@@ -119,9 +116,9 @@ const inputs = Object.freeze({
         required: true
     },
     message: {
-        el,
-        reset: () => { editor.reset() },
-        getText: () => { return editor.getMarkdown() },
+        el: document.querySelector("#standalone-container"),
+        reset: () => { document.querySelector("#standalone-container").value = "" },
+        getText: () => { return document.querySelector("#standalone-container").value },
         required: true
     }
 });
@@ -206,10 +203,6 @@ document.querySelector("#next").addEventListener("click", (e) => {
     if(message.el === null || message.getText().length == 0){
         error = true;
         queue.push(addError(message, "Message is required!"));
-        // Just to force this...
-        window.errorMode = error;
-        // Manually add the border and box-shadow...
-        setErrorEditorCss(message.el)
     }
     
     if(error){
@@ -241,9 +234,9 @@ document.querySelector("#next").addEventListener("click", (e) => {
     // record all stuff
     toggle = {
         // All the stuff which gets disabled...
-        disableInputs: [name, email, subject, {el: e.target}, {el: button}, {el: document.querySelector("#reset_main_form")}],
+        disableInputs: [name, email, subject, message, {el: e.target}, {el: button}, {el: document.querySelector("#reset_main_form")}],
         // All the toggle...
-        validationToggle: [message.el, viewerEl, e.target, retain, button, dispose, document.querySelector("#reset_main_form")],
+        validationToggle: [e.target, retain, button, dispose, document.querySelector("#reset_main_form")],
         // All the callback
         callback: [
             {
@@ -257,9 +250,6 @@ document.querySelector("#next").addEventListener("click", (e) => {
 
     // Disable the inputs
     disableInputs.forEach(a => a.el.disabled = !a.el.disabled);
-
-    // set the viewer to be the message text itself..
-    viewer.setMarkdown(message.getText());
 
     // Toggle all necessary 'validation-classes' for display & state change...
     validationToggle.forEach( el => el.classList.add(validationToggleClass) );
@@ -324,8 +314,8 @@ document.querySelector('#submit_btn').addEventListener('click', async (event) =>
     if(token.length === 0){
         // Do something
         showSnackbar( {
-            text: "Looks like you are a robot 🤖. To prove otherwise please solve the challenge 🤺!",
-            duration: 10000,
+            text: "You are required to complete the challenge 💪🏻 to prove that you are not a robot 🤖",
+            duration: 2000,
             fontSize: '16px',
             pos: 'top-right',
             showAction: true,
@@ -335,7 +325,11 @@ document.querySelector('#submit_btn').addEventListener('click', async (event) =>
         return;
     }
 
-    const { success, message: text, hostname=null } = await verifyToken(token);
+    try {
+        var { success, message: text, hostname=null } = await verifyToken(token);
+    }catch (err) {
+        var { success, text } = { success: false, text: "😓 There was some errors while verifying... Please try again!" }
+    }
     
     if(!success){
         showSnackbar({
@@ -374,7 +368,8 @@ document.querySelector('#submit_btn').addEventListener('click', async (event) =>
         name: name.value, 
         subject: subject.value, 
         message: message.value, 
-        token: hToken.value 
+        token: hToken.value,
+        hostname 
     })
     
     const snackClose = false
@@ -456,16 +451,11 @@ const allReset = ( { clearFormData=true, snackClose=true, toggleDisabled=true, r
     
     // Same reset function...
     
-    const {name, email, subject, message} = inputs;
+    const { name, email, subject, message } = inputs;
     const queue = [name, email, subject, message];
-    queue.forEach(element => {
-        // Reset all errors.. 
-        if(element === message) setErrorEditorCss(element.el, true);
-        removeError(element, 'invalid-feedback', true, 'is-invalid')
-        // Reset all inputs..
-        if(elementReset) element.reset();
-    });
-
+    // Element has been reset.
+    if(elementReset) queue.forEach(element => element.reset())
+    
     // Check global submission.
     // If flag is not set do not go beyond.
     if(!window.submission) return;
@@ -542,7 +532,6 @@ document.querySelector('#contact_form_close').addEventListener('click', function
     }
 });
 
-// TODO: Vanilla JS
 $('#contact_form').on('shown.bs.modal', async () => {
     // We will now load the grecaptcha...
     if(!captcha.loaded) loadScript("https://www.google.com/recaptcha/api.js?onload=recaptchaLoaded&render=explicit");
@@ -550,7 +539,6 @@ $('#contact_form').on('shown.bs.modal', async () => {
     document.querySelector("#contact_form_toggle").disabled = true;
 
     // We will anonymously sign in you..
-    
     if(!('user' in window) || window.user === null){
         try {
             const result = await signInAnonymously(auth);
