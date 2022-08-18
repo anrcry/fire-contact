@@ -209,6 +209,7 @@ document.querySelector("#next").addEventListener("click", (e) => {
         queue.push(addError(message, msg_check ? "Message is required!" : "There are some expletive(s) used! Please remove the same and continue."));
         if(!msg_check){
             msg_error_string = " Do note we have removed some expletives from your message!";
+            message.el.value = filter.clean(message.getText());
         }
     }
     
