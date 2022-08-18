@@ -4,7 +4,9 @@ import { auth, signInAnonymously, onAuthStateChanged, createRecord } from './src
 import { verifyToken } from './src/verify';
 import Snackbar from "node-snackbar";
 import sha1 from 'js-sha1';
-// import Filter from 'bad-words';
+import Filter from 'bad-words';
+
+const filter = new Filter();
 
 const { PUBLIC_RECAPTCHA_SITE_KEY, PUBLIC_RECAPTCHA_SITE_THEME, PUBLIC_RECAPTCHA_SITE_SIZE } = import.meta.env;
 
@@ -200,15 +202,20 @@ document.querySelector("#next").addEventListener("click", (e) => {
         queue.push(addError(subject, "Subject is required!"));
     }
 
-    if(message.el === null || message.getText().length == 0){
+    const msg_check = (message.el === null || message.getText().length == 0);
+    let msg_error_string = "";
+    if(msg_check || filter.clean(message.getText()) !== message.getText()){
         error = true;
-        queue.push(addError(message, "Message is required!"));
+        queue.push(addError(message, msg_check ? "Message is required!" : "There are some expletive(s) used! Please remove the same and continue."));
+        if(!msg_check){
+            msg_error_string = " Do note we have removed some expletives from your message!";
+        }
     }
     
     if(error){
         // Show the error snackbar
         showSnackbar( {
-            text: `🤨 There were some errors! Please try again`,
+            text: `🤨 There were some errors! Please try again.${msg_error_string}`,
             duration: 10000,
             fontSize: '16px',
             pos: 'top-right',
