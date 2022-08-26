@@ -46,16 +46,16 @@ My client side code is bootstraped & built by [Vite.js](https://vitejs.dev) with
 - ⚖ Extremely Lightweight
 - ⏳ Realtime features
 - 🔐 Standard Verification & Security
--🤺 Battle tested
+- 🤺 Battle tested
 
 ## Other features
 
 - 🔁 Idempotent Messages (No replay attacks)
 - 🛡 Messages sent only by humans
 - 🚦 Protected backend by security rules.
-- 📏 Easily scaleable
+  - 📏 Easily scaleable
 - ⛔ No read access
-- 📉 Low writes & reads keeping the 💳 cost low
+- 💳|🔻 Low writes & reads keeping cost low
 - ⏳ Scheduled auto-reply
 
 **NOTE**: You will find a ⚙ [.env.production](.env.production) file with all the VALUES filled in & then uploaded to the repository. Be assured these values are public facing values and no matter who sees them 👀, just cannot tamper with these.
