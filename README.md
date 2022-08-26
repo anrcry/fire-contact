@@ -35,7 +35,7 @@ My client side code is bootstraped & built by [Vite.js](https://vitejs.dev) with
 ## Other features
 
 - 🔁 Idempotent Messages (No replay attacks)
-- 🛡 Messages sent only by humans (reCAPTCHA token has to be solved & the site is protected via reCAPTCHA 😈)
+- 🛡 Messages sent only by humans
 - 🚦 Protected backend by security rules.
 - 📏 Easily scaleable
 - ⛔ No read access
@@ -50,7 +50,7 @@ My client side code is bootstraped & built by [Vite.js](https://vitejs.dev) with
 
 ⌨ | 🧼 `➡` 🖱 `➡` 💪🏻 `➡` 🖱 `➡` 🛡 `➡` 🔥|🗄 `➡` ⏳ `➡` 📩
 
-👆🏻 The above emojis summarize the workflow. It starts with the user typing ⌨ a message. They intially try to check 🕵🏻‍♂️ & filter 🧼 any profanity from the message, while validating the name, email and the subject. After that it challenges 💪🏻 the user 👤 to solve the same. The user then submites the solved challenge, which gets verified 🛡 and at the end a document is written to the Cloud Firestore under the collections "messages" (by default). I deviced a plan to make the message idempotent (no recording/writting) more than once, by making the document id the "hash of the token" solved by the user.
+👆🏻 The above emojis summarize the workflow. It starts with the user typing ⌨ a message. They intially try to check 🕵🏻‍♂️ & filter 🧼 any profanity from the message, while validating the name, email and the subject. After that it challenges 💪🏻 the user 👤 to solve the same. The user then submites the solved challenge, which gets verified 🛡 and at the end a document is written to the Cloud Firestore 🗄 under the collections "messages" (by default). I deviced a plan to make the message idempotent (no recording/writting more than once), by making the `document id` (which is basically a PRIMARY KEY in a RELATIONAL DATABASE) the "hash of the token" solved by the user.
 
 The following is the structure of the document written:
 
