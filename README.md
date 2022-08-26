@@ -1,6 +1,22 @@
-# 🔥 Fire Contact 📧
+# 🔥 Fire Contact 📧 <!-- omit in toc -->
 
 > 🤝🏻 Sometimes the perfect person for you is who you least expected to be.
+
+## Table of Contents <!-- omit in toc -->
+
+- [Introduction](#introduction)
+- [Proprietary Third Party Stuff](#proprietary-third-party-stuff)
+- [Open Source Stuff](#open-source-stuff)
+- [Killer features](#killer-features)
+- [Other features](#other-features)
+- [Workflow](#workflow)
+  - [Client Side workflow](#client-side-workflow)
+  - [Server Side](#server-side)
+  - [Scheduling ⏳](#scheduling-)
+- [Conclusion](#conclusion)
+
+## Introduction
+
 
 Fire Contact is built to get messages from you. My [website](https://formula21.github.io) is hosted on [GitHub](https://github.com/formula21/formula21.github.io), which is basically a static site hosting, with no backend. But a website devoid of a contact form is really in-efficient. Again it is arguably easy to shift to a hosting provider in less than a minute. They provide me with a SQL database, a backend to host my files, a custom dashboard so on and forth. But I really like to stick on to GitHub Pages.
 
@@ -88,7 +104,7 @@ Speaking of CORS, I have a whitelist of domains which can send requests to the b
 
 ### Scheduling ⏳
 
-> ⚠ Please note if use Cloud Functions, you need to have a 💰 billing account with Google Cloud.
+> 💰 Please note if use Cloud Functions, you need to have a billing account with Google Cloud.
 
 > If you are willing to pay 💳, please check out [Cloud Firestore triggers on Cloud Function](https://firebase.google.com/docs/functions/firestore-events), which is very efficient.
 
