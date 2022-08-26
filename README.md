@@ -88,11 +88,15 @@ Speaking of CORS, I have a whitelist of domains which can send requests to the b
 
 ### Scheduling ⏳
 
-> Please note if you do it the Cloud Functions way, you need to have a billing account with Google Cloud.
+> ⚠ Please note if use Cloud Functions, you need to have a 💰 billing account with Google Cloud.
 
-> If you are willing to pay, please check out [Cloud Firestore triggers on Cloud Function](https://firebase.google.com/docs/functions/firestore-events), which help you to do this much more efficiently.
+> If you are willing to pay 💳, please check out [Cloud Firestore triggers on Cloud Function](https://firebase.google.com/docs/functions/firestore-events), which is very efficient.
 
-I have been setting up the Pipedream Scheduling Workflow to go over the task. The scheduling will not immediately trigger a response, but will definitely do it within 1 - 1.5 hours. You need to however have a [Service Account on your Firebase Project](https://firebase.google.com/docs/admin/setup), while this [blog post](https://medium.com/litslink/firebase-admin-sdk-basics-in-examples-ee7e009a1116) is extemely helpful to do the basics.
+I have been setting up the Pipedream Scheduling Workflow to go over the task. The scheduling will not immediately trigger a reply-back, but will definitely do it work in 1 - 1.5 hours. Being the server side, the normal Firebase JS SDK won't work. For this we need [Firebase Admin SDK for Node.js](https://github.com/firebase/firebase-admin-node) or any other language. 
+
+To prove your identity, generally we would use the OAuth Protocol to authenticate where a access token & refresh token is involved. This is highly realiable on the event the corresponding REST API for Firebase are used. However we authenticate through a service Service Account which can be setup at [Service Account on your Firebase Project](https://firebase.google.com/docs/admin/setup). Some basic examples to use the same are on this [blog post](https://medium.com/litslink/firebase-admin-sdk-basics-in-examples-ee7e009a1116), while the rest is on the docs.
+
+> **Note**: You are not at all required to use the Node.js SDK version for Firebase Admin. Check out other supporting languages & their corresponding libraries.
 
 
 ## Conclusion
