@@ -8,7 +8,7 @@ import Filter from 'bad-words';
 
 const filter = new Filter();
 
-const { PUBLIC_RECAPTCHA_SITE_KEY, PUBLIC_RECAPTCHA_SITE_THEME, PUBLIC_RECAPTCHA_SITE_SIZE } = import.meta.env;
+const { PUBLIC_RECAPTCHA_V2_SITE_KEY, PUBLIC_RECAPTCHA_SITE_THEME, PUBLIC_RECAPTCHA_SITE_SIZE } = import.meta.env;
 
 const validationToggleClass = 'validation-complete';
 window.submission = false;
@@ -21,7 +21,7 @@ const captcha = {
     },
     loaded: false,
     opts: Object.freeze({
-        'sitekey' : PUBLIC_RECAPTCHA_SITE_KEY,
+        'sitekey' : PUBLIC_RECAPTCHA_V2_SITE_KEY,
         'theme': PUBLIC_RECAPTCHA_SITE_THEME,
         'size': PUBLIC_RECAPTCHA_SITE_SIZE,
         'error-callback': 'recaptchErrorOnLoad',
@@ -565,7 +565,5 @@ $('#contact_form').on('hidden.bs.modal', () => {
 onAuthStateChanged(auth, (user) => {
     if( user ){
         window.user = user;
-    }else {
-        // You are signed out... So we will sign out...
     }
 });

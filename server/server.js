@@ -17,10 +17,10 @@ const PORT =
     : null) || 3000;
 
 if (
-  !"RECAPTCHA_SITE_KEY" in process.env ||
-  process.env.RECAPTCHA_SITE_KEY.length === 0 ||
-  !"RECAPTCHA_SECRET_KEY" in process.env ||
-  process.env.RECAPTCHA_SECRET_KEY.length === 0
+  !"RECAPTCHA_V2_SITE_KEY" in process.env ||
+  process.env.RECAPTCHA_V2_SITE_KEY.length === 0 ||
+  !"RECAPTCHA_V2_SECRET_KEY" in process.env ||
+  process.env.RECAPTCHA_V2_SECRET_KEY.length === 0
 ) {
   // Ok we need to prompt
   console.info(
@@ -41,12 +41,13 @@ if (
   process.exit(1);
 }
 
-const { RECAPTCHA_ENDPOINT, RECAPTCHA_SECRET_KEY } = process.env;
+const { RECAPTCHA_ENDPOINT, RECAPTCHA_V2_SECRET_KEY } = process.env;
 
 const whitelist = [
   "https://me.anweshan.online",
   "https://fire-apps-7827c.web.app",
   "https://fire-apps-7827c.firebaseapp.com",
+  'http://localhost:5173',
 ];
 
 if(!PROD) {
@@ -73,15 +74,18 @@ app.use(express.json());
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.post("/verify", async (req, res) => {
+app.post("/verify_v2", async (req, res) => {
   // First check if we have the `token` parameter
+
+  console.info(`Remote address of the user -> ${req.socket.remoteAddress}`)
+
   const { token = null } = req.body;
 
   if (token === null || token.length === 0)
     res.status(403).json({ error: true, message: "A token was expected!" });
   try {
     const params = new URLSearchParams({
-      secret: RECAPTCHA_SECRET_KEY,
+      secret: RECAPTCHA_V2_SECRET_KEY,
       response: token,
     }).toString();
     
