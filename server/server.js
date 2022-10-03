@@ -44,10 +44,9 @@ if (
 const { RECAPTCHA_ENDPOINT, RECAPTCHA_V2_SECRET_KEY } = process.env;
 
 const whitelist = [
-  "https://me.anweshan.online",
   "https://fire-apps-7827c.web.app",
   "https://fire-apps-7827c.firebaseapp.com",
-  'http://localhost:5173',
+  "https://formula21.github.io"
 ];
 
 if(!PROD) {
